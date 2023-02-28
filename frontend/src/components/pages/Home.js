@@ -3,7 +3,6 @@ import { useAuth } from '../../utilities/AuthContext'
 
 function Home() {
   const {currentUser} = useAuth();
-  console.log(currentUser);
 
   return (
     <div>Home</div>
