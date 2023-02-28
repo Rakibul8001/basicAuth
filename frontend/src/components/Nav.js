@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect,useState } from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -8,7 +8,7 @@ import Axios from '../utilities/Axios';
 import { useAuth } from '../utilities/AuthContext';
 
 const NavBar=()=> {
-    const {currentUser} = useAuth();
+  const {currentUser,logout} = useAuth();
 
   return (
     <Navbar bg="light" variant="light" expand="lg">
@@ -21,12 +21,12 @@ const NavBar=()=> {
         </Nav>
         <Nav>
           <NavDropdown title="Loggedin user" id="basic-nav-dropdown">
-            {currentUser && (
-            <>
+            {currentUser && 
+            
                 <NavDropdown.Item>
-                    <Link to="/">Logout</Link> 
+                    <Link onClick={logout}>Logout</Link> 
                 </NavDropdown.Item>
-            </>)}
+            }
 
             {!currentUser && (<>
                 <NavDropdown.Item>

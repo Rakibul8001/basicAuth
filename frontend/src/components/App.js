@@ -1,11 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import './App.css';
-import Home from './components/pages/Home';
-import Signup from './components/pages/Signup';
-import Login from './components/pages/Login';
-import Layout from './components/Layout';
-import { AuthProvider } from './utilities/AuthContext';
+import '../App.css';
+import Home from './pages/Home';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import Layout from './Layout';
+import { AuthProvider } from '../utilities/AuthContext';
 
 function App() {
   return (

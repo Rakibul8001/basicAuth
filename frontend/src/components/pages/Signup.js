@@ -1,9 +1,11 @@
 import React,{useState} from 'react';
 import {Form, Button} from 'react-bootstrap'
-import Axios from '../../utilities/Axios';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../utilities/AuthContext';
 
 function Signup() {
-  const {http,saveToken} = Axios();
+  const router = useNavigate();
+  const {http,saveToken} = useAuth();
 
   const [user,setUser] = useState({
     name:"",
@@ -23,8 +25,6 @@ function Signup() {
       ...user
     })
     .then((res) => {
-      console.log(res?.data?.user);
-      console.log(res?.data?.token);
       saveToken(res?.data?.user, res?.data?.token);
     })
     .catch(err=>{

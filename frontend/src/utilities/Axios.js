@@ -35,7 +35,7 @@ export default function Axios() {
       setToken(storeToken);
       setUser(storeUser);
 
-      router('/');
+      // router('/');
   }
 
   function logout(){
