@@ -6,12 +6,12 @@ function Layout({children}) {
   const {currentUser} = useAuth();
   return (
     <Fragment>
-      <NavBar/>
-      <div className='container mt-2'>
-          {children}
-      </div>
+    <NavBar/>
+    <div className='container'>
+        {children}
+    </div>
 
-      </Fragment>
+    </Fragment>
   );
 }
 

@@ -1,44 +1,43 @@
-import React from 'react'
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Link } from 'react-router-dom';
-import Axios from '../utilities/Axios';
+import React from 'react';
+import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
+import { Link,useNavigate } from 'react-router-dom';
 import { useAuth } from '../utilities/AuthContext';
 
 const NavBar=()=> {
-    const {currentUser} = useAuth();
+    const navigate = useNavigate();
+    const {currentUser,logout} = useAuth();
+
+    const Logout=()=>{
+      logout();
+      navigate('/login');
+    }
 
   return (
     <Navbar bg="light" variant="light" expand="lg">
     <Container>
-      <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+      <Navbar.Brand> <Link to='/'>React-Bootstrap</Link></Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
           <Link to="/">Home</Link>
+          <Link to="/dashboard">Dashboard</Link>
         </Nav>
         <Nav>
           <NavDropdown title="Loggedin user" id="basic-nav-dropdown">
-            {currentUser && (
+            {currentUser ? (
             <>
-                <NavDropdown.Item>
-                    <Link to="/">Logout</Link> 
+                <NavDropdown.Item onClick={Logout}>
+                  Logout
                 </NavDropdown.Item>
-            </>)}
-
-            {!currentUser && (<>
+            </>) : (<>
                 <NavDropdown.Item>
-                <Link to="/signup">Signup</Link> 
+                  <Link to="/signup">Signup</Link> 
                 </NavDropdown.Item>
                 <NavDropdown.Item>
-                <Link to="/login">Login</Link> 
+                  <Link to="/login">Login</Link> 
                 </NavDropdown.Item>
             </>)}
                
-       
-
           </NavDropdown>
         </Nav>
       </Navbar.Collapse>
