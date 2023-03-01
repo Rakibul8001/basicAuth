@@ -1,5 +1,5 @@
 import React,{useContext,useEffect,useState} from 'react'
-import axios from 'axios';
+import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = React.createContext();
@@ -9,39 +9,42 @@ export const useAuth=()=>{
 }
 
 export const AuthProvider = ({children}) => {
+    const [loading,setLoading]=useState(true);
+    const [currentUser, setCurrentUser] = useState();
+    const [user,setUser] = useState({});
+    const [token,setToken] = useState("");
 
     const router = useNavigate();
 
     //get token string
-        function getToken(){
+    function getToken(){
+
         const tokenString = localStorage.getItem('token');
         const userToken = JSON.parse(tokenString);
         return userToken;
-    }
+
+
+  }
   //get user string
-   function getUser(){
+  function getUser(){
       const userString = localStorage.getItem('user');
       const user_detail = JSON.parse(userString);
       return user_detail;
+
   }
 
-  const [user,setUser] = useState({});
-  const [token,setToken] = useState("");
-  
-  const [loading,setLoading]=useState(true);
-  const [currentUser,setCurrentUser]=useState();
-
-useEffect(() => {
-    const unsubscribe = () => {
-      setCurrentUser(getUser());
-      setLoading(false);
-    };
-
+  //get current user
+  useEffect(() => {
+    const unsubscribe = ()=>{
+        setCurrentUser(getUser());
+        setToken(getToken());
+        setLoading(false);
+    }
     unsubscribe();
-  }, [user,token]);
 
- function saveToken(user,token){
- 
+  },[token]);
+
+function saveToken(user,token){
     // Perform localStorage action
     const storeToken = localStorage.setItem('token',JSON.stringify(token));
     const storeUser = localStorage.setItem('user',JSON.stringify(user));
@@ -50,15 +53,13 @@ useEffect(() => {
     setUser(storeUser);
 
     router('/');
-  
 }
 
 function logout(){
   localStorage.clear();
   setUser({});
   setToken("");
-
-  router('/login');
+  
 }
 
   const http = axios.create({
@@ -70,14 +71,11 @@ function logout(){
       }
   });
 
-    const value={
+    const value = {
         http,
         saveToken,
         logout,
         token,
-        user,
-        getToken,
-        getUser,
         currentUser
     }
 

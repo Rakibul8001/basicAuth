@@ -1,10 +1,8 @@
 import React,{useState} from 'react';
 import {Form, Button} from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../utilities/AuthContext';
 
 function Signup() {
-  const router = useNavigate();
   const {http,saveToken} = useAuth();
 
   const [user,setUser] = useState({

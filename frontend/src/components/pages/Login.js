@@ -2,18 +2,24 @@ import React,{ useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useAuth } from '../../utilities/AuthContext';
-import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  const router = useNavigate();
-  const {http,saveToken}=useAuth();
 
-  const [email,setEmail]=useState('');
-  const [password,setPassword]= useState('');
-  const LoginForm=async(e)=>{
+  const {http,saveToken} = useAuth();
+
+  const [user,setUser] = useState({
+    email:"",
+    password:""
+  });
+
+  const handleChange=(e)=>{
+    setUser({...user,[e.target.name]:e.target.value});
+  }
+
+  const LoginForm = async(e) => {
     e.preventDefault();
     await http.post(`/login`,{
-      email:email,password:password
+      ...user
     })
     .then((res) => {
       saveToken(res?.data?.user, res?.data?.token);
@@ -21,7 +27,6 @@ function Login() {
     .catch(err=>{
       console.log(err);
     });
-
   }
 
   return (
@@ -29,16 +34,14 @@ function Login() {
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control type="email" placeholder="Enter email"
-          defaultValue={email} 
-          name="email" onChange={(e)=>setEmail(e.target.value)} 
+          name="email" onChange={handleChange}
         />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" 
-          name="password" defaultValue={password} 
-          onChange={(e)=>setPassword(e.target.value)} 
+        <Form.Control type="password" placeholder="Password"
+          name='password' onChange={handleChange}
         />
       </Form.Group>
  
