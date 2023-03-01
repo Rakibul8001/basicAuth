@@ -27,7 +27,17 @@ function Dashboard() {
 
     useEffect(()=>{
         getProducts();
-    },[])
+    },[]);
+
+    const deleteItem=async(product_id)=>{
+        await http.post(`/product/delete/${product_id}`)
+        .then(res=>{
+            getProducts();
+        })
+        .catch(err=>{
+
+        });
+    }
 
   return (
     <Card>
@@ -57,8 +67,16 @@ function Dashboard() {
                         <td>{product?.name}</td>
                         <td>
                             <ul className='inlineList'>
-                                <li><Link to={`/product/edit/${product?.id}`}>edit</Link></li>
-                                <li><Link to="#">delete</Link></li>
+                                <li>
+                                    <Link to={`/product/edit/${product?.id}`}>
+                                        <Button variant='primary' size="sm">Edit</Button>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="#" onClick={()=>deleteItem(product?.id)}>
+                                        <Button variant='danger' size="sm">Delete</Button> 
+                                    </Link>
+                                </li>
                             </ul>
                         </td>
                     </tr>

@@ -23,7 +23,7 @@ const NavBar=()=> {
           <Link to="/dashboard">Dashboard</Link>
         </Nav>
         <Nav>
-          <NavDropdown title="Loggedin user" id="basic-nav-dropdown">
+          <NavDropdown title={!!currentUser === true ? `${currentUser?.name}`: `Account`} id="basic-nav-dropdown">
             {currentUser ? (
             <>
                 <NavDropdown.Item onClick={Logout}>

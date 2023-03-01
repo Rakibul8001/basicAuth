@@ -1,9 +1,10 @@
 import React,{useState} from 'react'
 import {Form,Button, Card} from 'react-bootstrap'
-import { useAuth } from '../../../utilities/AuthContext'
+import { useAuth } from '../../../utilities/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function CreateProduct() {
-    
+    const navigate = useNavigate();
     const {http}=useAuth();
     const [product, setProduct] = useState({
         name:""
@@ -15,7 +16,7 @@ function CreateProduct() {
         e.preventDefault();
         await http.post('/product/create',{...product})
             .then((res)=>{
-                console.log(res)
+                navigate('/dashboard');
             })
             .catch((err)=>{
                 console.log(err)
